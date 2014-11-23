@@ -12,9 +12,10 @@ namespace _02_calendar
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            var message = Console.ReadLine();
+            var message = "";
+            message = args.Length == 0 ? Console.ReadLine() : args[0];
             try
             {
                 DateTime.Parse(message);
@@ -25,14 +26,15 @@ namespace _02_calendar
                 Environment.Exit(1);
             }
             var calendar = new CalendarMaker(DateTime.Parse(message)).GetCalendar();
-            foreach (var value in calendar)
-            {
-                foreach (var value1 in value)
-                {
-                    Console.Write(value1 + "\t");
-                }
-                Console.WriteLine();
-            }
+            //foreach (var value in calendar)
+            //{
+            //    foreach (var value1 in value)
+            //    {
+            //        Console.Write(value1 + "\t");
+            //    }
+            //    Console.WriteLine();
+            //}
+            Application.Run(new Calendar(calendar));
         }
     }
 }
