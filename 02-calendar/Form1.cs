@@ -14,6 +14,7 @@ namespace _02_calendar
     {
         public Calendar()
         {
+            Size = new Size(500, 500);
 
         }
     }
