@@ -14,10 +14,12 @@ namespace _02_calendar
     {
         List<string[]> calendar;
         int size = 500;
-        public Calendar(List<string[]> calendar)
+        public Calendar(CalendarData calendar)
         {
             Size = new Size(size, (int)(size));
-            this.calendar = calendar;
+            var handleCalendar = calendar.weeks;
+            handleCalendar.Insert(0, calendar.namesOfWeekDays);
+            this.calendar = handleCalendar;
             Invalidate();
         }
         protected override void OnPaint(PaintEventArgs e)

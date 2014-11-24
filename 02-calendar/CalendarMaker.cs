@@ -15,9 +15,9 @@ namespace _02_calendar
         {
             calendar = new List<string[]>() {new string[countOfDaysInWeek], new string[countOfDaysInWeek]};
         }
-        public List<string[]> GetCalendar()
+        public CalendarData GetCalendar()
         {
-            return calendar;
+            return new CalendarData(calendar);
         }
         public void SetDate(DateTime date)
         {
