@@ -22,13 +22,11 @@ namespace _02_calendar
         }
         protected override void OnPaint(PaintEventArgs e)
         {
-            var raw = 0;
-            var column = 0;
-            foreach (var line in calendar)
+            for (var column = 0; column < calendar.Count; column++)
             {
-                foreach (var day in line)
+                for (var raw = 0; raw < calendar[column].Length; raw++)
                 {
-                    var text = day;
+                    var day = calendar[column][raw];
                     var point = new Point(
                             (size / (int)(calendar[0].Length + 1)) * raw + size / calendar[0].Length / 2,
                             (size / (int)(calendar.Count + 1)) * column + size / calendar.Count / 2);
@@ -43,18 +41,15 @@ namespace _02_calendar
                                 new Size(
                                     size / calendar[0].Length,
                                     size / calendar.Count)));
-                        text = day.Substring(1, day.Length - 2);
+                        day = day.Substring(1, day.Length - 2);
                     }
                     e.Graphics.DrawString(
-                        text,
+                        day,
                         new Font("Arial", size / 30),
                         Brushes.Black,
                         point,
                         new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-                    raw++;
                 }
-                raw = 0;
-                column++;
             }
         }
     }

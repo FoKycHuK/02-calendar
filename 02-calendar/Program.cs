@@ -25,7 +25,9 @@ namespace _02_calendar
                 Console.WriteLine("Неверная дата");
                 Environment.Exit(1);
             }
-            var calendar = new CalendarMaker(DateTime.Parse(message)).GetCalendar();
+            var maker = new CalendarMaker();
+            maker.SetDate(DateTime.Parse(message));
+            var calendar = maker.GetCalendar();
             //foreach (var value in calendar)
             //{
             //    foreach (var value1 in value)
