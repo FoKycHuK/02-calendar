@@ -25,6 +25,12 @@ namespace _02_calendar
             namesDays = calendar.namesDays;
             curDay = calendar.currentDay;
             Invalidate();
+            using (var bitmap = new Bitmap(size, size))
+            {
+                DrawToBitmap(bitmap, new Rectangle(0, 0, size, size));
+                bitmap.Save("my.png");
+            }
+            
         }
 
         protected override void OnPaint(PaintEventArgs e)
