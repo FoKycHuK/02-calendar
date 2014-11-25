@@ -17,7 +17,7 @@ namespace _02_calendar
         }
         public CalendarData GetCalendar()
         {
-            return new CalendarData(calendar);
+            return new CalendarData(calendar, date.Day);
         }
         public void SetDate(DateTime date)
         {
@@ -31,7 +31,7 @@ namespace _02_calendar
                 var numOfDay = ((int)day.DayOfWeek + countOfDaysInWeek - 1) % countOfDaysInWeek;
                 if (calendar[0][numOfDay] == null)
                     calendar[0][numOfDay] = day.DayOfWeek.ToString().Substring(0, 3);
-                calendar[calendar.Count - 1][numOfDay] = day.Day == date.Day ? String.Format("[{0}]", date.Day) : day.Day.ToString();
+                calendar[calendar.Count - 1][numOfDay] = day.Day.ToString();
                 if (day.DayOfWeek == DayOfWeek.Sunday)
                     calendar.Add(new string[countOfDaysInWeek]);
             }
