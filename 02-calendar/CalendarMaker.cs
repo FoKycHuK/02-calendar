@@ -11,19 +11,23 @@ namespace _02_calendar
         DateTime date;
         List<string[]> calendar;
         int countOfDaysInWeek = typeof(DayOfWeek).GetEnumValues().Length;
+
         public CalendarMaker()
         {
             calendar = new List<string[]>() {new string[countOfDaysInWeek], new string[countOfDaysInWeek]};
         }
+
         public CalendarData GetCalendar()
         {
             return new CalendarData(calendar, date.Day);
         }
+
         public void SetDate(DateTime date)
         {
             this.date = date;
             Init();
         }
+
         void Init()
         {
             foreach (var day in GetAllDaysOfMounth(date.Year, date.Month))

@@ -16,6 +16,7 @@ namespace _02_calendar
         string[] namesDays;
         int curDay;
         int size = 500;
+
         public Calendar(CalendarData calendar)
         {
             Size = new Size(size, (int)(size));
@@ -25,6 +26,7 @@ namespace _02_calendar
             curDay = calendar.currentDay;
             Invalidate();
         }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             for (var column = 0; column < namesDays.Length; column++)
@@ -73,6 +75,7 @@ namespace _02_calendar
             }
             
         }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);

@@ -11,6 +11,7 @@ namespace _02_calendar
         public readonly string[] namesDays;
         public readonly List<int[]> weeks;
         public readonly int currentDay;
+
         public CalendarData(List<string[]> calendar, int curDay)
         {
             namesDays = calendar[0];
