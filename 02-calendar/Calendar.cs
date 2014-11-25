@@ -43,16 +43,16 @@ namespace _02_calendar
                             Alignment = StringAlignment.Center, 
                             LineAlignment = StringAlignment.Center });
             }
-            for (var column = 0; column < calendar.Count; column++)
+            for (var row = 0; row < calendar.Count; row++)
             {
-                for (var raw = 0; raw < calendar[column].Length; raw++)
+                for (var column = 0; column < calendar[row].Length; column++)
                 {
-                    var day = calendar[column][raw];
+                    var day = calendar[row][column];
                     if (day == 0)
                         continue;
                     var point = new Point(
-                            (size / calendar[0].Length) * raw + size / calendar[0].Length / 2,
-                            (size / (calendar.Count + 1)) * column + size / calendar.Count);
+                            (size / calendar[0].Length) * column + size / calendar[0].Length / 2,
+                            (size / (calendar.Count + 1)) * row + size / calendar.Count);
                     if (day == curDay)
                     {
                         e.Graphics.FillEllipse(
