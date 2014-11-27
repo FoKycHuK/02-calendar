@@ -44,8 +44,6 @@ namespace _02_calendar
             foreach (var day in GetAllDaysOfMounth(date.Year, date.Month))
             {
                 var numOfDay = ((int)day.DayOfWeek + countOfDaysInWeek - 1) % countOfDaysInWeek;
-                //if (namesDays[numOfDay] == null)
-                //    namesDays[numOfDay] = day.DayOfWeek.ToString().Substring(0, 3);
                 weeks[weeks.Count - 1][numOfDay] = day.Day;
                 if (day.DayOfWeek == DayOfWeek.Sunday)
                     weeks.Add(new int[countOfDaysInWeek]);

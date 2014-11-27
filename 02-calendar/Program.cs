@@ -38,9 +38,6 @@ namespace _02_calendar
             //    Console.WriteLine();
             //}
             Application.Run(new Calendar(calendar));
-            Thread.Sleep(3000);
-            maker.SetDate(DateTime.Parse("06.06.2014"));
-            Application.Run(new Calendar(maker.GetCalendar()));
         }
     }
 }
