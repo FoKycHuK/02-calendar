@@ -12,15 +12,10 @@ namespace _02_calendar
         public readonly List<int[]> weeks;
         public readonly int currentDay;
 
-        public CalendarData(List<string[]> calendar, int curDay)
+        public CalendarData(int curDay, string[] namesDays, List<int[]> weeks)
         {
-            namesDays = calendar[0];
-            weeks = calendar
-                .Skip(1)
-                .Select(week => week
-                    .Select(day => day == null ? 0 : int.Parse(day))
-                    .ToArray())
-                .ToList();
+            this.namesDays = namesDays;
+            this.weeks = weeks;
             currentDay = curDay;
         }
     }

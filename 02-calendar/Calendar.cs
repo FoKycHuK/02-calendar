@@ -19,7 +19,7 @@ namespace _02_calendar
 
         public Calendar(CalendarData calendar)
         {
-            Size = new Size(size, (int)(size));
+            Size = new Size(size + 30, (int)(size));
             this.calendar = calendar.weeks;
             DoubleBuffered = true;
             namesDays = calendar.namesDays;
@@ -33,24 +33,34 @@ namespace _02_calendar
             
         }
 
+        void DrawCalendarPart(object text, Point point, bool isNameDay, Graphics graphics)
+        {
+            graphics.DrawString(
+                text.ToString(), 
+                new Font("Arial", isNameDay ? size / 25 : size / 30),
+                isNameDay ? Brushes.Blue : Brushes.Black,
+                point,
+                new StringFormat()
+                {
+                    Alignment = StringAlignment.Center,
+                    LineAlignment = StringAlignment.Center
+                });
+        }
+
+        void PrintLine(IEnumerable<object> text, int y, bool isNameDay, Graphics graphics)
+        {
+            var array = text.ToArray();
+            for (var row = 0; row < text.Count(); row++)
+            {
+                var point = new Point(size / calendar[0].Length * row + size / calendar[0].Length / 2, y);
+                DrawCalendarPart(array[row].ToString(), point, isNameDay, graphics);
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
-            for (var column = 0; column < namesDays.Length; column++)
-            {
-                var point = new Point(
-                    (size / calendar[0].Length + 1) * column + size / calendar[0].Length / 2,
-                    size / calendar.Count / 2);
-                e.Graphics.DrawString(
-                        namesDays[column].ToString(),
-                        new Font("Arial", size / 30),
-                        Brushes.Blue,
-                        point,
-                        new StringFormat() { 
-                            Alignment = StringAlignment.Center, 
-                            LineAlignment = StringAlignment.Center });
-            }
+            PrintLine(namesDays, size / calendar.Count / 2, true, e.Graphics);
             for (var row = 0; row < calendar.Count; row++)
-            {
                 for (var column = 0; column < calendar[row].Length; column++)
                 {
                     var day = calendar[row][column];
@@ -60,7 +70,6 @@ namespace _02_calendar
                             (size / calendar[0].Length) * column + size / calendar[0].Length / 2,
                             (size / (calendar.Count + 1)) * row + size / calendar.Count);
                     if (day == curDay)
-                    {
                         e.Graphics.FillEllipse(
                             Brushes.Aqua,
                             new Rectangle(
@@ -70,16 +79,8 @@ namespace _02_calendar
                                 new Size(
                                     size / calendar[0].Length,
                                     size / calendar.Count)));
-                    }
-                    e.Graphics.DrawString(
-                        day.ToString(),
-                        new Font("Arial", size / 30),
-                        Brushes.Black,
-                        point,
-                        new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-                }
-            }
-            
+                    DrawCalendarPart(day, point, false, e.Graphics);
+                }            
         }
 
         protected override void OnResize(EventArgs e)

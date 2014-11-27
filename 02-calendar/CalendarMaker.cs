@@ -9,35 +9,46 @@ namespace _02_calendar
     public class CalendarMaker
     {
         DateTime date;
-        List<string[]> calendar;
-        int countOfDaysInWeek = typeof(DayOfWeek).GetEnumValues().Length;
+        string[] namesDays;
+        List<int[]> weeks;
+        readonly int countOfDaysInWeek = typeof(DayOfWeek).GetEnumValues().Length;
 
         public CalendarMaker()
         {
-            calendar = new List<string[]>() {new string[countOfDaysInWeek], new string[countOfDaysInWeek]};
+            namesDays = new string[countOfDaysInWeek];
+            InitDaysNames();
         }
 
         public CalendarData GetCalendar()
         {
-            return new CalendarData(calendar, date.Day);
+            return new CalendarData(date.Day, namesDays, weeks);
         }
 
         public void SetDate(DateTime date)
         {
             this.date = date;
+            weeks = new List<int[]>() { new int[countOfDaysInWeek] };
             Init();
         }
 
+        void InitDaysNames()
+        {
+            foreach (var nameDay in typeof(DayOfWeek).GetEnumValues())
+            {
+                var numOfDay = ((int)nameDay + countOfDaysInWeek - 1) % countOfDaysInWeek;
+                namesDays[numOfDay] = nameDay.ToString().Substring(0, 3);
+            }
+        }
         void Init()
         {
             foreach (var day in GetAllDaysOfMounth(date.Year, date.Month))
             {
                 var numOfDay = ((int)day.DayOfWeek + countOfDaysInWeek - 1) % countOfDaysInWeek;
-                if (calendar[0][numOfDay] == null)
-                    calendar[0][numOfDay] = day.DayOfWeek.ToString().Substring(0, 3);
-                calendar[calendar.Count - 1][numOfDay] = day.Day.ToString();
+                //if (namesDays[numOfDay] == null)
+                //    namesDays[numOfDay] = day.DayOfWeek.ToString().Substring(0, 3);
+                weeks[weeks.Count - 1][numOfDay] = day.Day;
                 if (day.DayOfWeek == DayOfWeek.Sunday)
-                    calendar.Add(new string[countOfDaysInWeek]);
+                    weeks.Add(new int[countOfDaysInWeek]);
             }
         }
         static DateTime[] GetAllDaysOfMounth(int year, int month)
