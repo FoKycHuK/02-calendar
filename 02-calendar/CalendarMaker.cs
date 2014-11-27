@@ -11,6 +11,7 @@ namespace _02_calendar
         DateTime date;
         string[] namesDays;
         List<int[]> weeks;
+        CalendarData data;
         readonly int countOfDaysInWeek = typeof(DayOfWeek).GetEnumValues().Length;
 
         public CalendarMaker()
@@ -21,14 +22,14 @@ namespace _02_calendar
 
         public CalendarData GetCalendar()
         {
-            return new CalendarData(date.Day, namesDays, weeks);
+            return data;
         }
 
         public void SetDate(DateTime date)
         {
             this.date = date;
-            weeks = new List<int[]>() { new int[countOfDaysInWeek] };
-            Init();
+            FillCalendarWeeks();
+            data = new CalendarData(date.Day, namesDays, weeks);
         }
 
         void InitDaysNames()
@@ -39,8 +40,9 @@ namespace _02_calendar
                 namesDays[numOfDay] = nameDay.ToString().Substring(0, 3);
             }
         }
-        void Init()
+        void FillCalendarWeeks()
         {
+            weeks = new List<int[]>() { new int[countOfDaysInWeek] };
             foreach (var day in GetAllDaysOfMounth(date.Year, date.Month))
             {
                 var numOfDay = ((int)day.DayOfWeek + countOfDaysInWeek - 1) % countOfDaysInWeek;
