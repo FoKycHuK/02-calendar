@@ -9,15 +9,13 @@ namespace _02_calendar
     public class CalendarMaker
     {
         DateTime date;
-        string[] namesDays;
-        List<int[]> weeks;
+        readonly string[] namesDays;
         CalendarData data;
         readonly int countOfDaysInWeek = typeof(DayOfWeek).GetEnumValues().Length;
 
         public CalendarMaker()
         {
-            namesDays = new string[countOfDaysInWeek];
-            InitDaysNames();
+            namesDays = BuildDaysNames();
         }
 
         public CalendarData GetCalendar()
@@ -28,21 +26,22 @@ namespace _02_calendar
         public void SetDate(DateTime date)
         {
             this.date = date;
-            FillCalendarWeeks();
-            data = new CalendarData(date.Day, namesDays, weeks);
+            data = new CalendarData(date.Day, namesDays, BuildCalendarWeeks());
         }
 
-        void InitDaysNames()
+        string[] BuildDaysNames()
         {
+            var names = new string[countOfDaysInWeek];
             foreach (var nameDay in typeof(DayOfWeek).GetEnumValues())
             {
                 var numOfDay = ((int)nameDay + countOfDaysInWeek - 1) % countOfDaysInWeek;
-                namesDays[numOfDay] = nameDay.ToString().Substring(0, 3);
+                names[numOfDay] = nameDay.ToString().Substring(0, 3);
             }
+            return names;
         }
-        void FillCalendarWeeks()
+        List<int[]> BuildCalendarWeeks()
         {
-            weeks = new List<int[]>() { new int[countOfDaysInWeek] };
+            var weeks = new List<int[]>() { new int[countOfDaysInWeek] };
             foreach (var day in GetAllDaysOfMounth(date.Year, date.Month))
             {
                 var numOfDay = ((int)day.DayOfWeek + countOfDaysInWeek - 1) % countOfDaysInWeek;
@@ -50,6 +49,7 @@ namespace _02_calendar
                 if (day.DayOfWeek == DayOfWeek.Sunday)
                     weeks.Add(new int[countOfDaysInWeek]);
             }
+            return weeks;
         }
         static DateTime[] GetAllDaysOfMounth(int year, int month)
         {

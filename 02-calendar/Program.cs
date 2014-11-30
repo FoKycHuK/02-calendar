@@ -15,8 +15,7 @@ namespace _02_calendar
         [STAThread]
         static void Main(string[] args)
         {
-            var message = "";
-            message = args.Length == 0 ? Console.ReadLine() : args[0];
+            var message = args.Length == 0 ? Console.ReadLine() : args[0];
             try
             {
                 DateTime.Parse(message);
