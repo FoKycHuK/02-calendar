@@ -12,18 +12,14 @@ namespace _02_calendar
 {
     public class Calendar : Form
     {
-        List<int[]> calendar;
-        string[] namesDays;
-        int curDay;
+        CalendarData calendar;
         int size = 500;
 
         public Calendar(CalendarData calendar)
         {
             Size = new Size(size + 30, (int)(size));
-            this.calendar = calendar.weeks;
+            this.calendar = calendar;
             DoubleBuffered = true;
-            namesDays = calendar.namesDays;
-            curDay = calendar.currentDay;
             Invalidate();
             using (var bitmap = new Bitmap(size, size))
             {
@@ -52,33 +48,33 @@ namespace _02_calendar
             var array = text.ToArray();
             for (var row = 0; row < text.Count(); row++)
             {
-                var point = new Point(size / calendar[0].Length * row + size / calendar[0].Length / 2, y);
+                var point = new Point(size / calendar.weeks[0].Length * row + size / calendar.weeks[0].Length / 2, y);
                 DrawCalendarPart(array[row].ToString(), point, isNameDay, graphics);
             }
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            PrintLine(namesDays, size / calendar.Count / 2, true, e.Graphics);
-            for (var row = 0; row < calendar.Count; row++)
-                for (var column = 0; column < calendar[row].Length; column++)
+            PrintLine(calendar.namesDays, size / calendar.weeks.Count / 2, true, e.Graphics);
+            for (var row = 0; row < calendar.weeks.Count; row++)
+                for (var column = 0; column < calendar.weeks[row].Length; column++)
                 {
-                    var day = calendar[row][column];
+                    var day = calendar.weeks[row][column];
                     if (day == 0)
                         continue;
                     var point = new Point(
-                            (size / calendar[0].Length) * column + size / calendar[0].Length / 2,
-                            (size / (calendar.Count + 1)) * row + size / calendar.Count);
-                    if (day == curDay)
+                            (size / calendar.weeks[0].Length) * column + size / calendar.weeks[0].Length / 2,
+                            (size / (calendar.weeks.Count + 1)) * row + size / calendar.weeks.Count);
+                    if (day == calendar.currentDay)
                         e.Graphics.FillEllipse(
                             Brushes.Aqua,
                             new Rectangle(
                                 new Point(
-                                    point.X - size / calendar[0].Length / 2,
-                                    point.Y - size / calendar.Count / 2),
+                                    point.X - size / calendar.weeks[0].Length / 2,
+                                    point.Y - size / calendar.weeks.Count / 2),
                                 new Size(
-                                    size / calendar[0].Length,
-                                    size / calendar.Count)));
+                                    size / calendar.weeks[0].Length,
+                                    size / calendar.weeks.Count)));
                     DrawCalendarPart(day, point, false, e.Graphics);
                 }            
         }
