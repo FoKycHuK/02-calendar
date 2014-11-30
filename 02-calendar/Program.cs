@@ -16,17 +16,14 @@ namespace _02_calendar
         static void Main(string[] args)
         {
             var message = args.Length == 0 ? Console.ReadLine() : args[0];
-            try
-            {
-                DateTime.Parse(message);
-            }
-            catch (ArgumentOutOfRangeException)
+            DateTime date;
+            if (!DateTime.TryParse(message, out date))
             {
                 Console.WriteLine("Неверная дата");
                 Environment.Exit(1);
             }
             var maker = new CalendarMaker();
-            maker.SetDate(DateTime.Parse(message));
+            maker.SetDate(date);
             var calendar = maker.GetCalendar();
             //foreach (var value in calendar)
             //{
